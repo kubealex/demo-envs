@@ -22,12 +22,6 @@ variable cpu {
   default     = 2
 }
 
-variable kickstart_image {
-  type        = string
-  description = "Path for the kickstart image"
-  default     = "/tmp/oemdrv.img"
-}
-
 variable libvirt_network {
   type        = string
   description = "Name of libvirt network to be used for the VM"
@@ -50,6 +44,12 @@ variable os_image {
   type        = string
   description = "URL/path of the image to be used for the VM provisioning"
   default     = "rhel7.iso"
+}
+
+variable kickstart_image {
+  type        = string
+  description = "Path for the kickstart image"
+  default     = "oemdrv.img"
 }
 
 variable authorized_key_path {
