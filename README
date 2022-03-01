@@ -1,0 +1,1 @@
+mkfs.ext2 -d OEMDRV -L OEMDRV OEMDRV.img
