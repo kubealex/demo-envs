@@ -1,4 +1,4 @@
-network_cidr = ["192.168.222.0/24"]
+network_cidr = ["192.168.210.0/24"]
 domain = "example.com"
 memory = 4
 cpu = 2

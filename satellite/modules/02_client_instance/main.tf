@@ -23,7 +23,7 @@ resource "libvirt_volume" "os_image_rhel8" {
   size = var.disk_size*1073741824
 }
 
-resource "libvirt_volume" "kickstart_image_rhel8 {
+resource "libvirt_volume" "kickstart_image_rhel8" {
   name = "${var.hostname}-kickstart_rhel8"
   pool = var.libvirt_pool
   source = abspath("${path.module}/${var.kickstart_image_rhel8}")
@@ -32,7 +32,7 @@ resource "libvirt_volume" "kickstart_image_rhel8 {
 
 resource "libvirt_domain" "el7-server" {
   autostart = true
-  name = var.hostname
+  name = "el7-server"
   memory = var.memory*1024
   vcpu = var.cpu
 
@@ -75,7 +75,7 @@ resource "libvirt_domain" "el7-server" {
 
 resource "libvirt_domain" "el8-server" {
   autostart = true
-  name = var.hostname
+  name = "el8-server"
   memory = var.memory*1024
   vcpu = var.cpu
 

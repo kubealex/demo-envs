@@ -24,7 +24,6 @@ module "satellite_instance" {
   source = "./modules/01_satellite_instance"
 
 # Variables
-  hostname = var.hostname
   domain = var.domain
   memory = var.memory
   cpu = var.cpu
@@ -39,7 +38,6 @@ module "client_instances" {
   source = "./modules/02_client_instance"
 
 # Variables
-  hostname = var.hostname
   domain = var.domain
   memory = var.memory
   cpu = var.cpu

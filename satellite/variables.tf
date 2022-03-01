@@ -1,9 +1,3 @@
-variable hostname {
-  type        = string
-  description = "Hostname of the VM"
-  default     = "terraform-vm"
-}
-
 variable domain {
   type        = string
   description = "Domain for the virtual machine fqdn"
