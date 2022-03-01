@@ -1,5 +1,11 @@
-provider "libvirt" {
-  uri = "qemu:///system"
+terraform {
+ required_version = ">= 1.0"
+  required_providers {
+    libvirt = {
+      source  = "dmacvicar/libvirt"
+      version = "0.6.14"
+    }
+  }
 }
 
 resource "libvirt_pool" "vm_pool" {
@@ -26,17 +32,5 @@ resource "libvirt_network" "vm_network" {
         option_name = "server"
         option_value = "/${var.domain}/${cidrhost(var.network_cidr[0],1)}"
       }
-  }
-}
-
-
-terraform {
- required_version = ">= 1.0"
-  required_providers {
-    libvirt = {
-      source  = "dmacvicar/libvirt"
-      version = "0.6.14"
-      configuration_aliases = [ libvirt ]
-    }
   }
 }

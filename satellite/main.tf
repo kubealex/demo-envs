@@ -1,3 +1,4 @@
+
 terraform {
  required_version = ">= 1.0"
   required_providers {
@@ -7,6 +8,10 @@ terraform {
       configuration_aliases = [ libvirt ]
     }
   }
+}
+
+provider "libvirt" {
+  uri = "qemu:///system"
 }
 
 module "libvirt_resources" {
@@ -22,6 +27,7 @@ module "libvirt_resources" {
 
 module "satellite_instance" { 
   source = "./modules/01_satellite_instance"
+  depends_on = [module.libvirt_resources]
 
 # Variables
   domain = var.domain
@@ -36,7 +42,8 @@ module "satellite_instance" {
 
 module "client_instances" { 
   source = "./modules/02_client_instance"
-
+  depends_on = [module.libvirt_resources]
+  
 # Variables
   domain = var.domain
   memory = var.memory

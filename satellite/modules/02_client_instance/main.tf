@@ -1,5 +1,11 @@
-provider "libvirt" {
-  uri = "qemu:///system"
+terraform {
+ required_version = ">= 1.0"
+  required_providers {
+    libvirt = {
+      source  = "dmacvicar/libvirt"
+      version = "0.6.14"
+    }
+  }
 }
 
 resource "libvirt_volume" "os_image_rhel7" {
@@ -113,16 +119,5 @@ resource "libvirt_domain" "el8-server" {
     type = "spice"
     listen_type = "address"
     autoport = "true"
-  }
-}
-
-
-terraform {
- required_version = ">= 1.0"
-  required_providers {
-    libvirt = {
-      source  = "dmacvicar/libvirt"
-      version = "0.6.14"
-    }
   }
 }

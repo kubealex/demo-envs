@@ -1,5 +1,11 @@
-provider "libvirt" {
-  uri = "qemu:///system"
+terraform {
+ required_version = ">= 1.0"
+  required_providers {
+    libvirt = {
+      source  = "dmacvicar/libvirt"
+      version = "0.6.14"
+    }
+  }
 }
 
 resource "libvirt_volume" "os_image" {
@@ -67,13 +73,3 @@ output "macs" {
   value = flatten(libvirt_domain.satellite_instance.*.network_interface.0.mac)
 }
 
-terraform {
- required_version = ">= 1.0"
-  required_providers {
-    libvirt = {
-      source  = "dmacvicar/libvirt"
-      version = "0.6.14"
-      configuration_aliases = [ libvirt ]
-    }
-  }
-}
