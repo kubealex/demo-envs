@@ -29,12 +29,14 @@ resource "libvirt_network" "vm_network" {
   }
 }
 
+
 terraform {
+ required_version = ">= 1.0"
   required_providers {
     libvirt = {
-      source = "registry.terraform.io/dmacvicar/libvirt"
+      source  = "dmacvicar/libvirt"
       version = "0.6.14"
+      configuration_aliases = [ libvirt ]
     }
   }
 }
-

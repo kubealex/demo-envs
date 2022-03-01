@@ -16,7 +16,7 @@ resource "libvirt_volume" "kickstart_image" {
   format = "qcow2"
 }
 
-resource "libvirt_domain" "test-rhel" {
+resource "libvirt_domain" "satellite_instance" {
   autostart = true
   name = var.hostname
   memory = var.memory*1024
@@ -31,7 +31,7 @@ resource "libvirt_domain" "test-rhel" {
   }
 
   disk {
-     file = var.os_image
+     file = abspath("${path.module}/${var.os_image}")
   }
 
   disk {
@@ -59,20 +59,21 @@ resource "libvirt_domain" "test-rhel" {
   }
 }
 
+output "ips" {
+  value = flatten(libvirt_domain.satellite_instance.*.network_interface.0.addresses)
+}
+
+output "macs" {
+  value = flatten(libvirt_domain.satellite_instance.*.network_interface.0.mac)
+}
+
 terraform {
  required_version = ">= 1.0"
   required_providers {
     libvirt = {
       source  = "dmacvicar/libvirt"
       version = "0.6.14"
+      configuration_aliases = [ libvirt ]
     }
   }
-}
-
-output "ips" {
-  value = flatten(libvirt_domain.test-rhel.*.network_interface.0.addresses)
-}
-
-output "macs" {
-  value = flatten(libvirt_domain.test-rhel.*.network_interface.0.mac)
 }

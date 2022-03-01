@@ -1,13 +1,13 @@
 variable hostname {
   type        = string
   description = "Hostname of the VM"
-  default     = "terraform-vm"
+  default     = "satellite-vm"
 }
 
 variable domain {
   type        = string
   description = "Domain for the virtual machine fqdn"
-  default     = "virt-test"
+  default     = "example.com"
 }
  
 variable memory {
@@ -49,7 +49,7 @@ variable disk_size {
 variable os_image {
   type        = string
   description = "URL/path of the image to be used for the VM provisioning"
-  default     = "/tmp/rhel7.iso"
+  default     = "rhel7.iso"
 }
 
 variable authorized_key_path {
