@@ -31,12 +31,9 @@ module "satellite_instance" {
 
 # Variables
   domain = var.domain
-  memory = var.memory
-  cpu = var.cpu
   libvirt_network = var.libvirt_network
   libvirt_pool = var.libvirt_pool
   disk_size = var.disk_size
-  #os_image = var.os_image
   authorized_key_path = var.authorized_key_path
 }
 
@@ -46,12 +43,9 @@ module "client_instances" {
   
 # Variables
   domain = var.domain
-  memory = var.memory
-  cpu = var.cpu
   libvirt_network = var.libvirt_network
   libvirt_pool = var.libvirt_pool
   disk_size = var.disk_size
-  #os_image = var.os_image
   authorized_key_path = var.authorized_key_path
 }
 
