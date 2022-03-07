@@ -30,6 +30,8 @@ module "rhel_instance" {
   depends_on = [module.libvirt_resources]
   
 # Variables
+  cpu = var.cpu
+  memory = var.memory
   domain = var.domain
   libvirt_network = var.libvirt_network
   libvirt_pool = var.libvirt_pool
