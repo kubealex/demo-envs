@@ -25,7 +25,7 @@ module "libvirt_resources" {
   libvirt_pool = var.libvirt_pool
 }
 
-module "rhel_instances" { 
+module "rhel_instance" { 
   source = "./modules/01_rhel_instance"
   depends_on = [module.libvirt_resources]
   

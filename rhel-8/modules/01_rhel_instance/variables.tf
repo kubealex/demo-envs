@@ -22,12 +22,6 @@ variable cpu {
   default     = 2
 }
 
-variable kickstart_image_rhel7 {
-  type        = string
-  description = "Path for the kickstart image for RHEL7"
-  default     = "oemdrv-rhel7.img"
-}
-
 variable kickstart_image_rhel8 {
   type        = string
   description = "Path for the kickstart image for RHEL8"
@@ -50,12 +44,6 @@ variable disk_size {
   type        = number
   description = "Size in GBs of root volume for the VM"
   default     = 20
-}
-
-variable os_image_rhel7 {
-  type        = string
-  description = "URL/path of the image to be used for the VM provisioning"
-  default     = "rhel7.iso"
 }
 
 variable os_image_rhel8 {
