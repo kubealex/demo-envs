@@ -45,20 +45,15 @@
   - role: freeipa.ansible_freeipa.ipaserver
     state: present
 
-- name: Playbook to configure IPA clients with username/password
+- name: Playbook to configure ipaclients to use ipa-server as DNS
   hosts: ipaclients
   become: true
-  collections:
-    - freeipa.ansible_freeipa
-  pre_tasks:
+  tasks:
     - name: Set DNS to idm-server
       shell: nmcli con mod ens3 ipv4.dns {{ hostvars[inventory_hostname].idm_server_ip }}
-    
+
     - name: Restart NetworkManager
       service:
         name: NetworkManager
         state: restarted
 
-  roles:
-  - role: freeipa.ansible_freeipa.ipaclient
-    state: present
