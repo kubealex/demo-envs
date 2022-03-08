@@ -19,6 +19,10 @@
 #      private: no
 
   tasks:
+    - name: Set idm-server IP fact
+      set_fact:
+        idm_server_ip: "{{ hostvars[groups['ipaserver'][0]]['ansible_default_ipv4']['address'] }}"
+
     - name: Register system with Red Hat Subscription Manager
       community.general.redhat_subscription:
         state: present
@@ -46,6 +50,15 @@
   become: true
   collections:
     - freeipa.ansible_freeipa
+  pre_tasks:
+    - name: Set DNS to idm-server
+      shell: nmcli con mod ens3 ipv4.dns {{ hostvars[inventory_hostname].idm_server_ip }}
+    
+    - name: Restart NetworkManager
+      service:
+        name: NetworkManager
+        state: restarted
+
   roles:
   - role: freeipa.ansible_freeipa.ipaclient
     state: present
