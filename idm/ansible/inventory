@@ -1,14 +1,14 @@
 [ipaserver]
-idm-server.example.com
+idm-server.rhdemo.labs
 
 [ipaclients]
-idm-client.example.com
+idm-client.rhdemo.labs
 
 [ipaservers]
-idm-server.example.com
+idm-server.rhdemo.labs
 
 [ipaserver:vars]
-ipaserver_domain=example.com
+ipaserver_domain=rhdemo.labs
 ipaserver_realm=EXAMPLE.COM
 ipaserver_setup_dns=yes
 ipaserver_auto_forwarders=yes
@@ -16,8 +16,8 @@ ipaadmin_password=admin123
 ipadm_password=admin123
 
 [ipaclients:vars]
-ipaclient_domain=example.com
-ipaserver_domain=example.com
+ipaclient_domain=rhdemo.labs
+ipaserver_domain=rhdemo.labs
 ipaadmin_principal=admin
 ipaadmin_password=admin123
 ipassd_enable_dns_updates=true
