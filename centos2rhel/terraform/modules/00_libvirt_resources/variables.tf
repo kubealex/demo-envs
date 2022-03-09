@@ -11,13 +11,13 @@ variable "network_cidr" {
 variable libvirt_network {
   type        = string
   description = "Name of libvirt network to be used for the VM"
-  default     = "vm-net"
+  default     = "centos2rhel-demo"
 }
 
 variable libvirt_pool {
   type        = string
   description = "Name of libvirt pool to be used for the VM"
-  default     = "vm-pool"
+  default     = "centos2rhel-demo"
 }
 
 variable "libvirt_pool_path" { 
