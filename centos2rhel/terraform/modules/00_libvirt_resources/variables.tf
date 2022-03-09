@@ -1,11 +1,11 @@
 variable "domain" { 
   type = string
-  default = "example.com" 
+  default = "rhdemo.labs" 
 }
 
 variable "network_cidr" {
   type = list
-  default = ["192.168.222.0/24"]
+  default = ["192.168.215.0/24"]
 }
 
 variable libvirt_network {
