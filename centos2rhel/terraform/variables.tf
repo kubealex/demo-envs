@@ -7,13 +7,13 @@ variable domain {
 variable libvirt_network {
   type        = string
   description = "Name of libvirt network to be used for the VM"
-  default     = "centos2rhel-demo"
+  default     = "centos-lab"
 }
 
 variable libvirt_pool {
   type        = string
   description = "Name of libvirt pool to be used for the VM"
-  default     = "centos2rhel-demo"
+  default     = "centos-lab"
 }
 
 variable disk_size {
