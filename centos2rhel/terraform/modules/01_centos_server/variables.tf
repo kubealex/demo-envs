@@ -31,19 +31,19 @@ variable kickstart_image_centos8_server {
 variable libvirt_network {
   type        = string
   description = "Name of libvirt network to be used for the VM"
-  default     = "vm-net"
+  default     = "centos2rhel-demo"
 }
 
 variable libvirt_pool {
   type        = string
   description = "Name of libvirt pool to be used for the VM"
-  default     = "vm-pool"
+  default     = "centos2rhel-demo"
 }
 
 variable disk_size {
   type        = number
   description = "Size in GBs of root volume for the VM"
-  default     = 20
+  default     = 40
 }
 
 variable os_image_centos8_server {

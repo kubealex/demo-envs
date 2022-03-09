@@ -1,13 +1,13 @@
 variable hostname {
   type        = string
   description = "Hostname of the VM"
-  default     = "client"
+  default     = "rhel8-server"
 }
 
 variable domain {
   type        = string
   description = "Domain for the virtual machine fqdn"
-  default     = "example.com"
+  default     = "rhdemo.labs"
 }
  
 variable memory {
@@ -31,13 +31,13 @@ variable kickstart_image_rhel_client {
 variable libvirt_network {
   type        = string
   description = "Name of libvirt network to be used for the VM"
-  default     = "vm-net"
+  default     = "centos2rhel-demo"
 }
 
 variable libvirt_pool {
   type        = string
   description = "Name of libvirt pool to be used for the VM"
-  default     = "vm-pool"
+  default     = "centos2rhel-demo"
 }
 
 variable disk_size {
