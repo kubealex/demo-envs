@@ -1,13 +1,13 @@
 variable hostname {
   type        = string
   description = "Hostname of the VM"
-  default     = "client"
+  default     = "centos-server"
 }
 
 variable domain {
   type        = string
   description = "Domain for the virtual machine fqdn"
-  default     = "example.com"
+  default     = "rhdemo.labs"
 }
  
 variable memory {
