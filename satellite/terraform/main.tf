@@ -46,7 +46,6 @@ module "client_instances" {
   libvirt_network = var.libvirt_network
   libvirt_pool = var.libvirt_pool
   disk_size = var.disk_size
-  authorized_key_path = var.authorized_key_path
 }
 
 

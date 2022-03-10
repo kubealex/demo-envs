@@ -1,7 +1,7 @@
 - name: This play provisions VMs for centos2rhel migration demos
   hosts: localhost
   vars:
-    network_cidr: 192.168.215.0/24
+    network_cidr: 192.168.210.0/24
   tasks:
     - name: Provision all terraform resources
       community.general.terraform:
@@ -13,7 +13,7 @@
 
     - name: Add Local resolver for the domain
       copy:
-        content: server=/rhdemo.labs/{{ network_cidr | next_nth_usable(1)}}
+        content: server=/idmdemo.labs/{{ network_cidr | next_nth_usable(1)}}
         dest: /etc/NetworkManager/dnsmasq.d/rhdemo.conf
       become: true
     
@@ -24,15 +24,15 @@
 
     - name: Add servers to inventory
       add_host:
-        hostname: "{{ item }}.rhdemo.labs"
+        hostname: "{{ item }}.idmdemo.labs"
         ansible_user: sysadmin
         ansible_password: redhat
         ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
         groups:
           - "servers"        
       loop:
-        - centos8-server
-        - rhel8-server
+        - idm-server
+        - idm-client
 
     - name: Ensure to clean known_hosts
       known_hosts:
