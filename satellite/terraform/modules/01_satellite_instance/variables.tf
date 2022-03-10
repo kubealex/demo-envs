@@ -1,13 +1,13 @@
 variable hostname {
   type        = string
   description = "Hostname of the VM"
-  default     = "satellite-vm"
+  default     = "satellite"
 }
 
 variable domain {
   type        = string
   description = "Domain for the virtual machine fqdn"
-  default     = "example.com"
+  default     = "satellitedemo.labs"
 }
  
 variable memory {
@@ -25,13 +25,13 @@ variable cpu {
 variable libvirt_network {
   type        = string
   description = "Name of libvirt network to be used for the VM"
-  default     = "vm-net"
+  default     = "satellite-lab"
 }
 
 variable libvirt_pool {
   type        = string
   description = "Name of libvirt pool to be used for the VM"
-  default     = "vm-pool"
+  default     = "satellite-lab"
 }
 
 variable disk_size {
@@ -50,10 +50,4 @@ variable kickstart_image {
   type        = string
   description = "Path for the kickstart image"
   default     = "oemdrv.img"
-}
-
-variable authorized_key_path {
-  type        = string
-  description = "Public key to be added to the VM"
-  default     = "~/.ssh/id_rsa.pub"
 }

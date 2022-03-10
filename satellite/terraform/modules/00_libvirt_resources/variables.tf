@@ -1,23 +1,23 @@
 variable "domain" { 
   type = string
-  default = "example.com" 
+  default = "satellitedemo.labs" 
 }
 
 variable "network_cidr" {
   type = list
-  default = ["192.168.222.0/24"]
+  default = ["192.168.211.0/24"]
 }
 
 variable libvirt_network {
   type        = string
   description = "Name of libvirt network to be used for the VM"
-  default     = "vm-net"
+  default     = "satellite-lab"
 }
 
 variable libvirt_pool {
   type        = string
   description = "Name of libvirt pool to be used for the VM"
-  default     = "vm-pool"
+  default     = "satellite-lab"
 }
 
 variable "libvirt_pool_path" { 

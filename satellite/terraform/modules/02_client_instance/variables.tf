@@ -7,7 +7,7 @@ variable hostname {
 variable domain {
   type        = string
   description = "Domain for the virtual machine fqdn"
-  default     = "example.com"
+  default     = "satellitedemo.labs"
 }
  
 variable memory {
@@ -37,19 +37,19 @@ variable kickstart_image_rhel8 {
 variable libvirt_network {
   type        = string
   description = "Name of libvirt network to be used for the VM"
-  default     = "vm-net"
+  default     = "satellite-lab"
 }
 
 variable libvirt_pool {
   type        = string
   description = "Name of libvirt pool to be used for the VM"
-  default     = "vm-pool"
+  default     = "satellite-lab"
 }
 
 variable disk_size {
   type        = number
   description = "Size in GBs of root volume for the VM"
-  default     = 20
+  default     = 30
 }
 
 variable os_image_rhel7 {
@@ -62,10 +62,4 @@ variable os_image_rhel8 {
   type        = string
   description = "URL/path of the image to be used for the VM provisioning"
   default     = "rhel8.iso"
-}
-
-variable authorized_key_path {
-  type        = string
-  description = "Public key to be added to the VM"
-  default     = "~/.ssh/id_rsa.pub"
 }
