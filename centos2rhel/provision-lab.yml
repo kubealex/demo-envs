@@ -1,7 +1,8 @@
 - name: This play provisions loadbalancer VM for control plane
-  hosts: vm_host
-  vars_files:
-    - vars/k8s_cluster.yml
+  hosts: localhost
+  vars:
+    domain: rhdemo.labs
+    network_cidr: ["192.168.215.0/24"]
  
   tasks:
     - name: Provision all terraform resources
@@ -9,50 +10,48 @@
         project_path: "terraform"
         force_init: true
         variables:
-          network_cidr = ["192.168.215.0/24"]
-          domain = "rhdemo.labs"
+          network_cidr = "{{ network_cidr }}"
+          domain = "{{ domain }}"
         state: present
       become: true
 
-    - name: Add loadbalancer to inventory
+    - name: Add servers to inventory
       add_host:
-        hostname: '{{ k8s.cluster_name }}-loadbalancer.{{ k8s.network.domain }}'
-        ansible_ssh_private_key_file: "clusters/{{ k8s.cluster_name }}/id_rsa"
-        ansible_user: kube
-        ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+        hostname: "{{ item }}.{{ domain }}"
+        ansible_user: sysadmin
+        ansible_password: redhat
         groups:
-          - "loadbalancer"
+          - "servers"        
+      loop:
+        - centos-server
+        - rhel-server
 
     - name: Ensure to clean known_hosts
       known_hosts:
         host: "{{ item }}"
         path: ~/.ssh/known_hosts
         state: absent
-      loop: "{{ groups['loadbalancer'] }}"
+      loop: "{{ groups['servers'] }}"
       become: true
 
 - name: Check connection to loadbalancer
-  hosts: loadbalancer
+  hosts: servers
   gather_facts: no
-  vars_files:
-    - vars/k8s_cluster.yml
   tasks:
-    - block:
-      - name: Wait 600 seconds for target connection to become reachable/usable
-        wait_for_connection:
-          timeout: 600
-          delay: 0
+    - name: Wait 600 seconds for target connection to become reachable/usable
+      wait_for_connection:
+        timeout: 600
+        delay: 0
 
-      - ping:
+    - ping:
 
-      - name: Extract facts from setup
-        setup:
-        register: lb_facts
- 
-      - set_fact:
-          host_ip: "{{ lb_facts.ansible_facts.ansible_default_ipv4.address }}"
-          host_interface: "{{ lb_facts.ansible_facts.ansible_default_ipv4.interface }}"
-          host_mac: "{{ lb_facts.ansible_facts.ansible_default_ipv4.macaddress }}"
-          host_fqdn: "{{ lb_facts.ansible_facts.ansible_fqdn }}"
+    - name: Extract facts from setup
+      setup:
+      register: lb_facts
 
-        when: k8s.control_plane.vms > 1 or (k8s.worker_nodes.vms > 1 and ingress_controller.install_ingress_controller)
+    - set_fact:
+        host_ip: "{{ lb_facts.ansible_facts.ansible_default_ipv4.address }}"
+        host_interface: "{{ lb_facts.ansible_facts.ansible_default_ipv4.interface }}"
+        host_mac: "{{ lb_facts.ansible_facts.ansible_default_ipv4.macaddress }}"
+        host_fqdn: "{{ lb_facts.ansible_facts.ansible_fqdn }}"
+
