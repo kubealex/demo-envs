@@ -2,18 +2,17 @@
   hosts: localhost
   vars:
     domain: rhdemo.labs
-    network_cidr: "[192.168.215.0/24]"
+    network_cidr: 192.168.215.0/24
  
   tasks:
     - name: Provision all terraform resources
       community.general.terraform:
-        project_path: "terraform"
+        project_path: "terraform/"
         force_init: true
         variables:
-          network_cidr: "{{ network_cidr }}"
+          network_cidr: ' ["{{ network_cidr }}"]'
           domain: "{{ domain }}"
         state: present
-      become: true
 
     - name: Add servers to inventory
       add_host:
@@ -32,16 +31,15 @@
         path: ~/.ssh/known_hosts
         state: absent
       loop: "{{ groups['servers'] }}"
-      become: true
 
-- name: Check connection to loadbalancer
+- name: Check connection to servers
   hosts: servers
   gather_facts: no
   tasks:
-    - name: Wait 600 seconds for target connection to become reachable/usable
+    - name: Waiting for installation to end, it can take time!
       wait_for_connection:
-        timeout: 600
-        delay: 0
+        timeout: 1800
+        delay: 300
 
     - ping:
 
