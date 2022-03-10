@@ -2,7 +2,7 @@
   hosts: localhost
   vars:
     domain: rhdemo.labs
-    network_cidr: ["192.168.215.0/24"]
+    network_cidr: "[192.168.215.0/24]"
  
   tasks:
     - name: Provision all terraform resources
@@ -10,8 +10,8 @@
         project_path: "terraform"
         force_init: true
         variables:
-          network_cidr = "{{ network_cidr }}"
-          domain = "{{ domain }}"
+          network_cidr: "{{ network_cidr }}"
+          domain: "{{ domain }}"
         state: present
       become: true
 
