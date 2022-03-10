@@ -13,9 +13,8 @@
 
     - name: Add Local resolver for the domain
       copy:
-        content: server=/rhdemo.labs/{{ network_cidr }}
+        content: server=/rhdemo.labs/{{ network_cidr | next_nth_usable(1)}}
         dest: /etc/NetworkManager/dnsmasq.d/rhdemo.conf
-        state: present
       become: true
     
     - name: Restart NetworkManager to reload config
@@ -25,7 +24,7 @@
 
     - name: Add servers to inventory
       add_host:
-        hostname: "{{ item }}.{{ domain }}"
+        hostname: "{{ item }}.rhdemo.labs"
         ansible_user: sysadmin
         ansible_password: redhat
         groups:
