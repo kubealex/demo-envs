@@ -1,9 +1,7 @@
 - name: This play provisions loadbalancer VM for control plane
   hosts: localhost
   vars:
-    domain: rhdemo.labs
     network_cidr: 192.168.215.0/24
- 
   tasks:
     - name: Provision all terraform resources
       community.general.terraform:
@@ -11,8 +9,19 @@
         force_init: true
         variables:
           network_cidr: ' ["{{ network_cidr }}"]'
-          domain: "{{ domain }}"
         state: present
+
+    - name: Add Local resolver for the domain
+      copy:
+        content: server=/rhdemo.labs/{{ network_cidr }}
+        dest: /etc/NetworkManager/dnsmasq.d/rhdemo.conf
+        state: present
+      become: true
+    
+    - name: Restart NetworkManager to reload config
+      service:
+        name: NetworkManager
+        state: restarted
 
     - name: Add servers to inventory
       add_host:
@@ -22,8 +31,8 @@
         groups:
           - "servers"        
       loop:
-        - centos-server
-        - rhel-server
+        - centos8-server
+        - rhel8-server
 
     - name: Ensure to clean known_hosts
       known_hosts:
@@ -42,14 +51,4 @@
         delay: 300
 
     - ping:
-
-    - name: Extract facts from setup
-      setup:
-      register: lb_facts
-
-    - set_fact:
-        host_ip: "{{ lb_facts.ansible_facts.ansible_default_ipv4.address }}"
-        host_interface: "{{ lb_facts.ansible_facts.ansible_default_ipv4.interface }}"
-        host_mac: "{{ lb_facts.ansible_facts.ansible_default_ipv4.macaddress }}"
-        host_fqdn: "{{ lb_facts.ansible_facts.ansible_fqdn }}"
 
