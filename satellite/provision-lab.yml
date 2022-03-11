@@ -1,4 +1,4 @@
-- name: This play provisions VMs for centos2rhel migration demos
+- name: This play provisions VMs for Satellite demos
   hosts: localhost
   vars:
     network_cidr: 192.168.211.0/24
@@ -65,7 +65,7 @@
     - name: Waiting for installation to end, it can take time!
       wait_for_connection:
         timeout: 1800
-        delay: 600
+        delay: 0
 
     - ping:
 
