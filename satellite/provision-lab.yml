@@ -3,6 +3,22 @@
   vars:
     network_cidr: 192.168.211.0/24
   tasks:
+
+    - name: Rebuild Kickstart config
+      community.general.filesystem:
+        fstype: ext2
+        dev: "{{ playbook_dir }}/terraform/modules/{{ item.module }}/{{ item.kickstart }}-oemdrv.img"
+        opts: -d {{ playbook_dir }}/terraform/kickstart/{{ item.kickstart }} -L OEMDRV
+        force: true
+      loop:
+        - module: 01_satellite_instance
+          kickstart: rhel7-satellite
+        - module: 02_client_instance
+          kickstart: rhel7
+        - module: 02_client_instance
+          kickstart: rhel8
+        
+        
     - name: Provision all terraform resources
       community.general.terraform:
         project_path: "terraform/"
@@ -13,7 +29,7 @@
 
     - name: Add Local resolver for the domain
       copy:
-        content: server=/idmdemo.labs/{{ network_cidr | next_nth_usable(1)}}
+        content: server=/satellitedemo.labs/{{ network_cidr | next_nth_usable(1)}}
         dest: /etc/NetworkManager/dnsmasq.d/satellitedemo.conf
       become: true
     
