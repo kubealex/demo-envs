@@ -1,0 +1,1 @@
+mkfs.ext2 -d kickstart/rhel7-sso -L OEMDRV modules/01_sso_instance/oemdrv.img

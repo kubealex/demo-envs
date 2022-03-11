@@ -25,8 +25,8 @@ module "libvirt_resources" {
   libvirt_pool = var.libvirt_pool
 }
 
-module "satellite_instance" { 
-  source = "./modules/01_satellite_instance"
+module "sso_instance" { 
+  source = "./modules/01_sso_instance"
   depends_on = [module.libvirt_resources]
 
 # Variables
@@ -35,16 +35,4 @@ module "satellite_instance" {
   libvirt_pool = var.libvirt_pool
   disk_size = var.disk_size
 }
-
-module "client_instances" { 
-  source = "./modules/02_client_instance"
-  depends_on = [module.libvirt_resources]
-  
-# Variables
-  domain = var.domain
-  libvirt_network = var.libvirt_network
-  libvirt_pool = var.libvirt_pool
-  disk_size = var.disk_size
-}
-
 
