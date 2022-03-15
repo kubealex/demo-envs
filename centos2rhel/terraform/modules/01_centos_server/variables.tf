@@ -25,7 +25,7 @@ variable cpu {
 variable kickstart_image_centos8_server {
   type        = string
   description = "Path for the kickstart image for RHEL8"
-  default     = "oemdrv-centos8.img"
+  default     = "centos8-oemdrv.img"
 }
 
 variable libvirt_network {
@@ -50,10 +50,4 @@ variable os_image_centos8_server {
   type        = string
   description = "URL/path of the image to be used for the VM provisioning"
   default     = "centos8.iso"
-}
-
-variable authorized_key_path {
-  type        = string
-  description = "Public key to be added to the VM"
-  default     = "~/.ssh/id_rsa.pub"
 }

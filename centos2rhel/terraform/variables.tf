@@ -22,12 +22,6 @@ variable disk_size {
   default     = 40
 }
 
-variable authorized_key_path {
-  type        = string
-  description = "Public key to be added to the VM"
-  default     = "~/.ssh/id_rsa.pub"
-}
-
 variable network_cidr {
   type        = list
   description = "Network CIDR for libvirt network definition"
