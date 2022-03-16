@@ -61,13 +61,13 @@
     - name: Waiting for installation to end, it can take time!
       wait_for_connection:
         timeout: 1800
-        delay: 600
+        delay: 0
 
     - ping:
 
     - name: Setup sysadmin user to use sudo
       copy:
-        content: '%wheel\tALL=(ALL)\tNOPASSWD: ALL'
+        content: '%wheel	ALL=(ALL)	NOPASSWD: ALL'
         dest: /etc/sudoers.d/wheelers
         mode: 0400
         owner: root
