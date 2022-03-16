@@ -3,6 +3,18 @@
   vars:
     network_cidr: 192.168.215.0/24
   tasks:
+    - name: Rebuild Kickstart config
+      community.general.filesystem:
+        fstype: ext2
+        dev: "{{ playbook_dir }}/terraform/modules/{{ item.module }}/{{ item.kickstart }}-oemdrv.img"
+        opts: -d {{ playbook_dir }}/terraform/kickstart/{{ item.kickstart }} -L OEMDRV
+        force: true
+      loop:
+        - module: 01_centos_server
+          kickstart: centos8
+        - module: 02_rhel_server
+          kickstart: rhel8
+
     - name: Provision all terraform resources
       community.general.terraform:
         project_path: "terraform/"
