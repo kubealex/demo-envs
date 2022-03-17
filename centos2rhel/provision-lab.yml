@@ -4,6 +4,17 @@
   vars:
     network_cidr: 192.168.215.0/24
   tasks:
+
+    - name: Create a 1Mib file to store kickstart 
+      community.general.filesize:
+        path: "{{ playbook_dir }}/terraform/modules/{{ item.module }}/{{ item.kickstart }}-oemdrv.img"
+        size: 1Mib
+      loop:
+        - module: 01_centos_server
+          kickstart: centos8
+        - module: 02_rhel_server
+          kickstart: rhel8
+
     - name: Rebuild Kickstart config
       community.general.filesystem:
         fstype: ext2
