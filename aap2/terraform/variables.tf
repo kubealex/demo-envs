@@ -1,19 +1,19 @@
 variable domain {
   type        = string
   description = "Domain for the virtual machine fqdn"
-  default     = "satellitedemo.labs"
+  default     = "aapdemo.labs"
 }
 
 variable libvirt_network {
   type        = string
   description = "Name of libvirt network to be used for the VM"
-  default     = "satellite-lab"
+  default     = "aap-lab"
 }
 
 variable libvirt_pool {
   type        = string
   description = "Name of libvirt pool to be used for the VM"
-  default     = "satellite-lab"
+  default     = "aap-lab"
 }
 
 variable disk_size {
@@ -25,7 +25,7 @@ variable disk_size {
 variable network_cidr {
   type        = list
   description = "Network CIDR for libvirt network definition"
-  default     = ["192.168.211.0/24"]
+  default     = ["192.168.216.0/24"]
 }
 
 variable libvirt_pool_path {

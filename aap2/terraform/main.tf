@@ -25,8 +25,8 @@ module "libvirt_resources" {
   libvirt_pool = var.libvirt_pool
 }
 
-module "satellite_instance" { 
-  source = "./modules/01_satellite_instance"
+module "conroller_instance" { 
+  source = "./modules/01_controller_instance"
   depends_on = [module.libvirt_resources]
 
 # Variables
@@ -36,8 +36,8 @@ module "satellite_instance" {
   disk_size = var.disk_size
 }
 
-module "client_instances" { 
-  source = "./modules/02_client_instance"
+module "hub_instance" { 
+  source = "./modules/02_hub_instance"
   depends_on = [module.libvirt_resources]
   
 # Variables
