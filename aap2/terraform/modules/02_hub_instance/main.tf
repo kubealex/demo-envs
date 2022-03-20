@@ -16,7 +16,7 @@ resource "libvirt_volume" "os_image" {
 }
 
 resource "libvirt_volume" "kickstart_image" {
-  name = "${var.hostname}-kickstart_rhel8"
+  name = "${var.hostname}-kickstart"
   pool = var.libvirt_pool
   source = abspath("${path.module}/${var.kickstart_image}")
   format = "qcow2"

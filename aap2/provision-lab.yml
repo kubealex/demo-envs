@@ -4,6 +4,16 @@
     network_cidr: 192.168.216.0/24
   tasks:
 
+    - name: Create a 1Mib file to store kickstart
+      community.general.filesize:
+        path: "{{ playbook_dir }}/terraform/modules/{{ item.module }}/{{ item.kickstart }}-oemdrv.img"
+        size: 1MiB
+      loop:
+        - module: 01_controller_instance
+          kickstart: rhel8-controller
+        - module: 02_hub_instance
+          kickstart: rhel8-hub
+
     - name: Rebuild Kickstart config
       community.general.filesystem:
         fstype: ext2
