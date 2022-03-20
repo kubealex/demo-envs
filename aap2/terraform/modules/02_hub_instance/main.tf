@@ -8,17 +8,17 @@ terraform {
   }
 }
 
-resource "libvirt_volume" "os_image_rhel8" {
-  name = "${var.hostname}-os_image_rhel8"
+resource "libvirt_volume" "os_image" {
+  name = "${var.hostname}-os_image"
   pool = var.libvirt_pool
   format = "qcow2"
   size = var.disk_size*1073741824
 }
 
-resource "libvirt_volume" "kickstart_image_rhel8" {
+resource "libvirt_volume" "kickstart_image" {
   name = "${var.hostname}-kickstart_rhel8"
   pool = var.libvirt_pool
-  source = abspath("${path.module}/${var.kickstart_image_rhel8}")
+  source = abspath("${path.module}/${var.kickstart_image}")
   format = "qcow2"
 }
 
@@ -37,15 +37,15 @@ resource "libvirt_domain" "hub" {
   }
 
   disk {
-     file = abspath("${path.module}/${var.os_image_rhel8}")
+     file = abspath("${path.module}/${var.os_image}")
   }
 
   disk {
-     volume_id = libvirt_volume.os_image_rhel8.id
+     volume_id = libvirt_volume.os_image.id
   }
   
   disk {
-     volume_id = libvirt_volume.kickstart_image_rhel8.id
+     volume_id = libvirt_volume.kickstart_image.id
   }
 
   network_interface {
