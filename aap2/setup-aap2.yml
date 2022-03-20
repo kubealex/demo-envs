@@ -1,0 +1,115 @@
+---
+- name: Configure RHSM on nodes
+  hosts: controller,hub
+  become: true
+  vars_prompt:
+    - name: rhsm_user
+      prompt: What is your RHSM Username (RHNID)?
+      unsafe: yes
+      private: no
+
+    - name: rhsm_password
+      prompt: What is your RHSM Password?
+      unsafe: yes
+      private: yes
+
+    - name: rhsm_pool_id
+      prompt: What is the pool-id for your subscription (check README)?
+      unsafe: yes
+      private: no
+
+  tasks:
+    - name: Register system with Red Hat Subscription Manager
+      community.general.redhat_subscription:
+        state: present
+        username: "{{ rhsm_user }}"
+        password: "{{ rhsm_password }}"
+        pool_ids: "{{ rhsm_pool_id }}"
+
+    - name: Enable required RHSM repositories
+      community.general.rhsm_repository:
+        name: 
+          - ansible-automation-platform-2.1-for-rhel-8-x86_64-rpms
+        state: enabled
+
+    - name: Ensure all packages are updated
+      yum:
+        name: '*'
+        state: latest
+  tags: setup
+
+- name: AAP controller configuration playbook
+  hosts: controller
+  become: true
+  tasks:
+    - name: Create destination directory
+      file:
+        path: /root/aap2
+        state: directory
+
+    - name: Extract foo.tgz into /var/lib/foo
+      ansible.builtin.unarchive:
+        src: aap2.tar.gz
+        dest: /root/aap2
+
+    - name: Get aap2 folder name
+      find:
+        paths: /root/aap2
+        file_type: directory
+      register: untar
+
+    - name: Print var
+      debug:
+        var: untar.files[0].path
+
+    - name: Copy inventory for controller
+      copy:
+        src: inventory-controller
+        dest: "{{ untar.files[0].path }}/inventory"
+
+    - name: Install AAP2
+      ansible.builtin.shell: 
+        cmd: ./setup.sh
+        chdir: "{{ untar.files[0].path }}"
+
+  #  - name: Reboot server
+  #    reboot: 
+  tags: controller
+
+- name: AAP controller configuration playbook
+  hosts: hub
+  become: true
+  tasks:
+    - name: Create destination directory
+      file:
+        path: /root/aap2
+        state: directory
+
+    - name: Extract foo.tgz into /var/lib/foo
+      ansible.builtin.unarchive:
+        src: aap2.tar.gz
+        dest: /root/aap2
+
+    - name: Get aap2 folder name
+      find:
+        paths: /root/aap2
+        file_type: directory
+      register: untar
+
+    - name: Print var
+      debug:
+        var: untar.files[0].path
+
+    - name: Copy inventory for controller
+      copy:
+        src: inventory-hub
+        dest: "{{ untar.files[0].path }}/inventory"
+
+    - name: Install AAP2
+      ansible.builtin.shell:
+        cmd: ./setup.sh
+        chdir: "{{ untar.files[0].path }}"
+
+  #  - name: Reboot server
+  #    reboot:
+  tags: hub

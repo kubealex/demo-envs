@@ -2,5 +2,6 @@
 terraform.tfstate* 
 rhel-server-7.9-x86_64-dvd.iso
 *.iso
+*.tar.gz
 *.log
 context/
