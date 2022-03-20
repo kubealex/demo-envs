@@ -22,7 +22,7 @@ resource "libvirt_volume" "kickstart_image" {
   format = "qcow2"
 }
 
-resource "libvirt_domain" "satellite_instance" {
+resource "libvirt_domain" "controller_instance" {
   autostart = true
   name = var.hostname
   memory = var.memory*1024
@@ -66,10 +66,10 @@ resource "libvirt_domain" "satellite_instance" {
 }
 
 output "ips" {
-  value = flatten(libvirt_domain.satellite_instance.*.network_interface.0.addresses)
+  value = flatten(libvirt_domain.controller_instance.*.network_interface.0.addresses)
 }
 
 output "macs" {
-  value = flatten(libvirt_domain.satellite_instance.*.network_interface.0.mac)
+  value = flatten(libvirt_domain.controller_instance.*.network_interface.0.mac)
 }
 

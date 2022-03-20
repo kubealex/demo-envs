@@ -1,13 +1,13 @@
 variable hostname {
   type        = string
   description = "Hostname of the VM"
-  default     = "satellite"
+  default     = "controller"
 }
 
 variable domain {
   type        = string
   description = "Domain for the virtual machine fqdn"
-  default     = "satellitedemo.labs"
+  default     = "aapdemo.labs"
 }
  
 variable memory {
@@ -25,13 +25,13 @@ variable cpu {
 variable libvirt_network {
   type        = string
   description = "Name of libvirt network to be used for the VM"
-  default     = "satellite-lab"
+  default     = "aap-lab"
 }
 
 variable libvirt_pool {
   type        = string
   description = "Name of libvirt pool to be used for the VM"
-  default     = "satellite-lab"
+  default     = "aap-lab"
 }
 
 variable disk_size {
@@ -43,11 +43,11 @@ variable disk_size {
 variable os_image {
   type        = string
   description = "URL/path of the image to be used for the VM provisioning"
-  default     = "rhel7.iso"
+  default     = "rhel8.iso"
 }
 
 variable kickstart_image {
   type        = string
   description = "Path for the kickstart image"
-  default     = "rhel7-satellite-oemdrv.img"
+  default     = "rhel8-controller-oemdrv.img"
 }
