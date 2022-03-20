@@ -1,6 +1,6 @@
 ---
-- name: Satellite server configuration playbook
-  hosts: satellite
+- name: AAP controller configuration playbook
+  hosts: controller
   become: true
   vars_prompt:
     - name: rhsm_user
