@@ -2,6 +2,7 @@
 
 This is a simple demo environment provisioner for Satellite to install based on Ansible and Terraform.
 It creates:
+
 - libvirt-network with DHCP/DNS
 - libvirt-pool for your VMS
 - Satellite server 
@@ -28,7 +29,7 @@ You need to follow the instructions in [Ansible Website](https://docs.ansible.co
 The provisioner consists of two playbooks, that configure the underlying components (VM, network) and prepares the guests to install Satellite.
 
 The first playbook is **provision-lab.yml** which takes care of creating KVM resources. It only has a single variable:
-
+    |--|--|
     | **network_cidr** | Defaults to 192.168.211.0/24 |
 
 The package comes with an inventory:
@@ -57,7 +58,7 @@ It will ask for:
 - PoolID of the subscription
 
 It will install Satellite with:
-
+|--|--|
 | Organization | Red Hat |
 | Location | Raleigh  |
 | Username | admin | 
