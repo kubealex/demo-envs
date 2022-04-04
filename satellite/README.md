@@ -5,7 +5,7 @@ It creates:
 
 - libvirt-network with DHCP/DNS
 - libvirt-pool for your VMS
-- Satellite server 
+- Satellite server
 - RHEL7 and RHEL8 Client for demo purposes
 
 ## Host setup
@@ -30,7 +30,7 @@ The provisioner consists of two playbooks, that configure the underlying compone
 
 The first playbook is **provision-lab.yml** which takes care of creating KVM resources. It only has a single variable: 
 
-| | |
+| Variable | Value |
 |--|--|
 | **network_cidr** | Defaults to 192.168.211.0/24 |
 
@@ -41,7 +41,6 @@ The package comes with an inventory:
     satellite.satellitedemo.labs ansible_user=sysadmin
 
 The playbook can either download RHEL 7.9 and RHEL 8.5 images, or work with pre-downloaded images. The only requirement is that the images need to be placed in the playbook directory with the name **rhel7.iso** and **rhel8.iso**
-
 
 Once you set the variable to the desired value, you can run the playbook:
 
@@ -61,6 +60,7 @@ It will ask for:
 
 It will install Satellite with:  
 
+| Variable | Value |
 |--|--|
 | Organization | Red Hat |
 | Location | Raleigh  |
@@ -69,4 +69,4 @@ It will install Satellite with:
 
 ## Test your configuration
 
-If the setup was good, you will be able to access your IdM server on https://idm-server.<your-domain>
+If the setup was good, you will be able to access your IdM server on [https://satellite.satellitedemo.labs](https://satellite.satellitedemo.labs)
