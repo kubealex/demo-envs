@@ -28,7 +28,8 @@ You need to follow the instructions in [Ansible Website](https://docs.ansible.co
 
 The provisioner consists of two playbooks, that configure the underlying components (VM, network) and prepares the guests to install Satellite.
 
-The first playbook is **provision-lab.yml** which takes care of creating KVM resources. It only has a single variable:
+The first playbook is **provision-lab.yml** which takes care of creating KVM resources. It only has a single variable: 
+
     |--|--|
     | **network_cidr** | Defaults to 192.168.211.0/24 |
 
@@ -57,7 +58,8 @@ It will ask for:
 - Password
 - PoolID of the subscription
 
-It will install Satellite with:
+It will install Satellite with: 
+
 |--|--|
 | Organization | Red Hat |
 | Location | Raleigh  |
