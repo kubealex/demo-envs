@@ -1,13 +1,15 @@
 # Satellite Demo env installer
 
-This is a simple demo environment provisioner for IdM to install.
+This is a simple demo environment provisioner for Satellite to install based on Ansible and Terraform.
 It creates:
 - libvirt-network with DHCP/DNS
 - libvirt-pool for your VMS
 - Satellite server 
 - RHEL7 and RHEL8 Client for demo purposes
 
-## VM setup
+## Host setup
+
+### Download Terraform
 
 VM setup is based on Terraform, it instantiates three virtual machine, *satellite*, *el7-server* and *el8-server*, kickstarting the setup.
 
@@ -16,6 +18,20 @@ First you need to download and install Terraform:
     sudo yum install -y yum-utils
     sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
     sudo yum -y install terraform
+
+### Install Ansible
+
+You need to follow the instructions in [Ansible Website](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-the-ansible-community-package) to proceed and install Ansible on your machine.
+
+## Lab provisioning
+
+The provisioner consists of two playbooks, that configure the underlying components (VM, network) and prepares the guests to install Satellite.
+
+The first playbook is **provision-lab.yml** which takes care of creating KVM resources. It only has a single variable 
+
+    | **network_cidr** | Defaults to 192.168.211.0/24 |
+
+### Download RHEL images
 
 Then you need to download the FULL RHEL8 image and link it in the modules folder and create a symbolic link in the modules folder:
 
@@ -34,52 +50,6 @@ Run the playbook to provision the VMs:
     ansible-playbook -i inventory provision-lab.yml
 
 The setup will take a bit as it is a full install with a kickstarter. 
-
-## IdM setup
-
-Once your VMs are up and running I prepared an execution-environment to use with Ansible, to use freeipa.ansible_freeipa collection to provision both server and client.
-
-From the *satellite* folder, build your execution-environment:
-
-    ansible-builder build -c ansible/execution-environment/context -f ansible/execution-environment/execution-environment.yml -t ansible-execution-env
-
-Edit *ansible/inventory* file if you need fine tuning on attributes (i.e. if you changed the domain):
-
-    [ipaserver]
-    idm-server.rhdemo.labs
-
-    [ipaclients]
-    idm-client.rhdemo.labs
-
-    [ipaservers]
-    idm-server.rhdemo.labs
-
-    [ipaserver:vars]
-    ipaserver_domain=rhdemo.labs
-    ipaserver_realm=RHDEMO.LABS
-    ipaserver_setup_dns=yes
-    ipaserver_setup_adtrust=yes
-    ipaserver_auto_forwarders=yes
-    ipaadmin_password=admin123
-    ipadm_password=admin123
-
-    [ipaclients:vars]
-    ipaclient_domain=rhdemo.labs
-    ipaclient_realm=RHDEMO.LABS
-    ipaserver_domain=rhdemo.labs
-    ipaserver_realm=RHDEMO.LABS
-    ipaadmin_principal=admin
-    ipaadmin_password=admin123
-    ipassd_enable_dns_updates=true
-
-Then launch the playbook to install **idm-server**:
-
-    ansible-navigator run -m stdout --eei=ansible-execution-env --pp never --pae false -i ansible/inventory ansible/idm-server-setup.yml 
-
-If you want to configure the client to connect to idm-server launch the playbook to setup **idm-client**:
-
-    ansible-navigator run -m stdout --eei=ansible-execution-env --pp never --pae false -i ansible/inventory ansible/idm-client-setup.yml 
-
 
 ## Test your configuration
 
