@@ -27,29 +27,42 @@ You need to follow the instructions in [Ansible Website](https://docs.ansible.co
 
 The provisioner consists of two playbooks, that configure the underlying components (VM, network) and prepares the guests to install Satellite.
 
-The first playbook is **provision-lab.yml** which takes care of creating KVM resources. It only has a single variable 
+The first playbook is **provision-lab.yml** which takes care of creating KVM resources. It only has a single variable:
 
     | **network_cidr** | Defaults to 192.168.211.0/24 |
 
-### Download RHEL images
+The package comes with an inventory:
 
-Then you need to download the FULL RHEL8 image and link it in the modules folder and create a symbolic link in the modules folder:
+    localhost ansible_connection=local
+    [satellite]
+    satellite.satellitedemo.labs ansible_user=sysadmin
 
-    ln -s /path/to/rhel7iso terraform/modules/01_satellite_instance/rhel7.iso
-    ln -s /path/to/rhel7iso terraform/modules/02_client_instance/rhel7.iso
-    ln -s /path/to/rhel8iso terraform/modules/02_client_instance/rhel8.iso
+The playbook can either download RHEL 7.9 and RHEL 8.5 images, or work with pre-downloaded images. The only requirement is that the images need to be placed in the playbook directory with the name **rhel7.iso** and **rhel8.iso**
 
-Review settings in **provision-lab.yml** file, containing some basic inputs:
 
-    network_cidr = ["192.168.211.0/24"]
-
-The terraform plan also creates an isolated virtual network, with DHCP and DNS for the specified domain.
-
-Run the playbook to provision the VMs:
+Once you set the variable to the desired value, you can run the playbook:
 
     ansible-playbook -i inventory provision-lab.yml
 
-The setup will take a bit as it is a full install with a kickstarter. 
+## Satellite setup
+
+With your lab up and running, you can proceed installing Satellite using the provided **satellite-setup.yml** playbook.
+
+    ansible-playbook -i inventory setup-satellite.yml
+
+It will ask for:
+
+- RHNID (Username)
+- Password
+- PoolID of the subscription
+
+It will install Satellite with:
+
+| Organization | Red Hat |
+| Location | Raleigh  |
+| Username | admin | 
+| Password | redhat | 
+
 
 ## Test your configuration
 
