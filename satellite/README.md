@@ -42,9 +42,15 @@ The package comes with an inventory:
 
 The playbook can either download RHEL 7.9 and RHEL 8.5 images, or work with pre-downloaded images. The only requirement is that the images need to be placed in the playbook directory with the name **rhel7.iso** and **rhel8.iso**
 
-Once you set the variable to the desired value, you can run the playbook:
+To download the images via the playbook, you will be prompted to enter your [Offline Token](https://access.redhat.com/management/api) to download resources.
+
+**IMPORTANT** If you don't want to download images (it's around 20GB), just leave the variable blank.
+
+Once you set the *network_cidr* variable to the desired value, you can run the playbook:
 
     ansible-playbook -i inventory provision-lab.yml
+
+It takes around 20-25 minutes to be up and running. If you experience last step of the playbook being hanging after the machines are completely installed, **relaunch** the playbook as sometimes the ping module gets stuck.
 
 ## Satellite setup
 
