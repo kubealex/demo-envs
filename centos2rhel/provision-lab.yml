@@ -54,7 +54,7 @@
           url: "https://vault.centos.org/8.5.2111/isos/x86_64/CentOS-8.5.2111-x86_64-dvd1.iso"
           dest: "{{ playbook_dir }}/centos8.iso"
 
-      when: offline_token is undefined
+      when: offline_token is defined
 
 - name: This play provisions VMs for centos2rhel migration demos
   hosts: localhost
