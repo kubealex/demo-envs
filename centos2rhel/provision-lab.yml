@@ -77,7 +77,7 @@
     - name: Create a 1Mib file to store kickstart 
       community.general.filesize:
         path: "{{ playbook_dir }}/terraform/modules/{{ item.module }}/{{ item.kickstart }}-oemdrv.img"
-        size: 1Mib
+        size: 1MiB
       loop:
         - module: 01_centos_server
           kickstart: centos8
